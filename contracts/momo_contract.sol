@@ -5,15 +5,23 @@ import './ERC721A.sol';
 import '@openzeppelin/contracts/access/Ownable.sol';
 
 contract momo_contract is ERC721A, Ownable {
-    uint256 MAX_MINTS = 100;
-    uint256 MAX_SUPPLY = 10000;
-    uint256 public mintPrice = 0.00083 ether;
+    uint256 private MAX_MINTS;
+    uint256 private MAX_SUPPLY;
+    uint256 private mintPrice;
 
-    string public baseURI = 'ipfs://placeholder/';
+    string private baseURI;
+    string private notRevealURI;
 
     bool private isMintEnabled;
+    bool private reveal;
 
-    constructor() ERC721A('momo', 'momo') {}
+    constructor(string memory _initBaseURI) ERC721A('momo', 'momo') {
+        MAX_MINTS = 100;
+        MAX_SUPPLY = 10000;
+        mintPrice = 0.00083 ether;
+        baseURI = _initBaseURI;
+        notRevealURI = 'ipfs://placeholder';
+    }
 
     function mint(uint256 quantity) external payable {
         // _safeMint's second argument now takes in a quantity, not a tokenId.
@@ -28,11 +36,17 @@ contract momo_contract is ERC721A, Ownable {
         payable(owner()).transfer(address(this).balance);
     }
 
+    function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
+        if (reveal) return super.tokenURI(tokenId);
+        else return notRevealURI;
+    }
+
     function _baseURI() internal view override returns (string memory) {
         return baseURI;
     }
 
     //PUBLIC WRITE ONLYOWNER
+
     function setMintPrice(uint256 _mintPrice) public onlyOwner {
         mintPrice = _mintPrice;
     }
@@ -41,6 +55,16 @@ contract momo_contract is ERC721A, Ownable {
         isMintEnabled = _value;
     }
 
+    function EnableReveal() public onlyOwner {
+        reveal = true;
+    }
+
+    function EditNotRevealURI(string memory _NotBaseURI) public onlyOwner {
+        notRevealURI = _NotBaseURI;
+    }
+
+    //PUBLIC CLIENT
+
     //VIEW
     function getMintPrice() public view returns (uint256 _mintPrice) {
         _mintPrice = mintPrice;
@@ -48,5 +72,9 @@ contract momo_contract is ERC721A, Ownable {
 
     function getIsMintEnabled() public view returns (bool _isMintEnabled) {
         _isMintEnabled = isMintEnabled;
+    }
+
+    function getIsRevealed() public view returns (bool _reveal) {
+        _reveal = reveal;
     }
 }
