@@ -10,7 +10,6 @@ contract momo_contract is ERC721A, Ownable {
     uint256 private mintPrice;
 
     string private baseURI;
-    string private notRevealURI;
 
     bool private isMintEnabled;
     bool private reveal;
@@ -20,7 +19,6 @@ contract momo_contract is ERC721A, Ownable {
         MAX_SUPPLY = 10000;
         mintPrice = 0.00083 ether;
         baseURI = _initBaseURI;
-        notRevealURI = 'ipfs://placeholder';
     }
 
     function mint(uint256 quantity) external payable {
@@ -34,11 +32,6 @@ contract momo_contract is ERC721A, Ownable {
 
     function withdraw() external payable onlyOwner {
         payable(owner()).transfer(address(this).balance);
-    }
-
-    function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
-        if (reveal) return super.tokenURI(tokenId);
-        else return notRevealURI;
     }
 
     function _baseURI() internal view override returns (string memory) {
@@ -57,10 +50,6 @@ contract momo_contract is ERC721A, Ownable {
 
     function EnableReveal() public onlyOwner {
         reveal = true;
-    }
-
-    function EditNotRevealURI(string memory _NotBaseURI) public onlyOwner {
-        notRevealURI = _NotBaseURI;
     }
 
     //PUBLIC CLIENT
