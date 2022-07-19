@@ -1,9 +1,16 @@
+- Deploy:
+  //npx hardhat run script/scriptName.js --network networkName
+
+- Verify:
+  //npx hardhat verify --network networkName contractAddress parameters
+
 [![Docs][docs-shield]][docs-url]
 [![NPM][npm-shield]][npm-url]
 [![CI][ci-shield]][ci-url]
 [![Issues][issues-shield]][issues-url]
 [![MIT License][license-shield]][license-url]
 [![Coverage][coverage-shield]][coverage-url]
+
 <!-- OTHER BADGES -->
 <!-- [![Contributors][contributors-shield]][contributors-url] -->
 <!-- [![Forks][forks-shield]][forks-url] -->
@@ -58,15 +65,15 @@ Once installed, you can use the contracts in the library by importing them:
 ```solidity
 pragma solidity ^0.8.4;
 
-import "erc721a/contracts/ERC721A.sol";
+import 'erc721a/contracts/ERC721A.sol';
 
 contract Azuki is ERC721A {
-    constructor() ERC721A("Azuki", "AZUKI") {}
+  constructor() ERC721A('Azuki', 'AZUKI') {}
 
-    function mint(uint256 quantity) external payable {
-        // `_mint`'s second argument now takes in a `quantity`, not a `tokenId`.
-        _mint(msg.sender, quantity);
-    }
+  function mint(uint256 quantity) external payable {
+    // `_mint`'s second argument now takes in a `quantity`, not a `tokenId`.
+    _mint(msg.sender, quantity);
+  }
 }
 
 ```

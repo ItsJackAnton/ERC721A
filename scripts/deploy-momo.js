@@ -1,6 +1,6 @@
 const hh = require('hardhat');
 
-const baseAbi = 'baseAbi';
+const baseAbi = 'QmVgJYyqWXU7ep3cHsA82txUtiJjPrnSAaN5vhAQBbD4tU';
 function getAbi() {
   return `ipfs://${baseAbi}/`;
 }
