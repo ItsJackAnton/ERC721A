@@ -4,7 +4,7 @@ pragma solidity ^0.8.4;
 import './ERC721A.sol';
 import '@openzeppelin/contracts/access/Ownable.sol';
 
-contract momo_contract is ERC721A, Ownable {
+contract ERC721_Extension is ERC721A, Ownable {
     uint256 private MAX_MINTS;
     uint256 private MAX_SUPPLY;
     uint256 private mintPrice;
@@ -14,7 +14,7 @@ contract momo_contract is ERC721A, Ownable {
     bool private isMintEnabled;
     bool private reveal;
 
-    constructor(string memory _initBaseURI) ERC721A('momo', 'momo') {
+    constructor(string memory _initBaseURI) ERC721A('Fat&Tired Ratcoiner', 'FTR') {
         MAX_MINTS = 100;
         MAX_SUPPLY = 10000;
         mintPrice = 0.00083 ether;

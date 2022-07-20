@@ -1,5 +1,5 @@
 - Deploy:
-  //npx hardhat run script/scriptName.js --network networkName
+  //npx hardhat run scripts/scriptName.js --network networkName
 
 - Verify:
   //npx hardhat verify --network networkName contractAddress parameters
